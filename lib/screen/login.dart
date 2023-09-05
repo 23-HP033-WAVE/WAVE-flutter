@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wave/main.dart';
 import 'package:wave/screen/signup.dart';
 // import 'package:wave_login/screens/signup.dart';
 
@@ -162,7 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             backgroundColor: const Color(0xff72B8C1),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const TabPage()));
+                          },
                           child: const Text(
                             'Login',
                             style: TextStyle(
