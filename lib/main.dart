@@ -2,10 +2,6 @@ import 'package:wave/screen/home_screen.dart';
 import 'package:wave/screen/post_analysis_screen.dart';
 import 'package:wave/screen/post_list_screen.dart';
 import 'package:wave/screen/post_screen.dart';
-// import 'package:wave_01/screens/mypage_screen.dart';
-// import 'package:wave_01/screens/post_analysis_screen.dart';
-// import 'package:wave_01/screens/post_list_screen.dart';
-// import 'package:wave_01/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/screen/splash_screen.dart';
 
