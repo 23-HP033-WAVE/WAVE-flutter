@@ -15,6 +15,7 @@ class _PostScreenState extends State<PostScreen> {
     '강문해변',
     '인천',
     '동막해변',
+    '서울',
   ];
 
   @override
