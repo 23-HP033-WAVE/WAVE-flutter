@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//신고하기
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
 
@@ -86,7 +85,7 @@ class _PostScreenState extends State<PostScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: const TextField(
                 decoration: InputDecoration(
-                  hintText: '게시물 내용을 작성해주세요:)',
+                  hintText: '게시물 내용을 작성해주세요 :)',
                   hintStyle: TextStyle(
                     color: Color(0xffD9D9D9),
                   ),
@@ -98,13 +97,35 @@ class _PostScreenState extends State<PostScreen> {
             ),
             const SizedBox(height: 70.0),
             Container(
-              margin: const EdgeInsets.only(right: 300),
-              child: const Text(
-                '위치 분류',
-                style: TextStyle(
-                  color: Color(0xff545454),
-                  fontSize: 16,
-                ),
+              margin: const EdgeInsets.only(right: 30, left: 20),
+              child: Row(
+                children: [
+                  const Text(
+                    '위치 분류 *',
+                    style: TextStyle(
+                      color: Color(0xff545454),
+                      fontSize: 16,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50.0),
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                        });
+                      },
+                      items: itemList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -120,7 +141,7 @@ class _PostScreenState extends State<PostScreen> {
             Container(
               margin: const EdgeInsets.only(right: 300),
               child: const Text(
-                '첨부 파일',
+                '첨부 파일 *',
                 style: TextStyle(
                   color: Color(0xff545454),
                   fontSize: 16,
@@ -234,6 +255,10 @@ class _PostScreenState extends State<PostScreen> {
                   child: const Text('등록하기'),
                 ),
               ],
+            ),
+            const SizedBox(
+              width: 20,
+              height: 50,
             ),
           ],
         ),
