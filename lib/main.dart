@@ -1,9 +1,11 @@
-import 'package:wave/screen/home_screen.dart';
 import 'package:wave/screen/post_analysis_screen.dart';
 import 'package:wave/screen/post_list_screen.dart';
 import 'package:wave/screen/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/screen/splash_screen.dart';
+import 'package:wave/screen/mypage_screen.dart';
+// import 'package:wave/screen/home_screen.dart';
+// import 'package:wave/screen/mypage_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,8 +39,8 @@ class _TabPageState extends State<TabPage> {
           children: const [
             // MyPage 화면 구현 전 임시 추가
             // 로직을 어떻게 해야되지?????
-            HomeScreen(),
-            // MyPage(),
+            MyPage(),
+            //HomeScreen(),
             PostScreen(),
             PostList(),
             PostAnalysis(),
