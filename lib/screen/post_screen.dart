@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:wave/models/post_model.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -18,10 +21,59 @@ class _PostScreenState extends State<PostScreen> {
     '서울',
   ];
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+
+  //List<String> selectedImages = []; // 갤러리에서 선택한 이미지 경로 저장용 list
+
+  Future<void> _uploadPost(PostModel postModel) async {
+    final url =
+        Uri.parse('https://jsonplaceholder.typicode.com/posts'); //주소 수정해
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(postModel.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      //post 성공 시
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('게시물이 성공적으로 등록되었습니다.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      // 성공 시 다른 화면 이동 필요
+    } else {
+      // post 실패 시
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('게시물 등록에 실패했습니다. 다시 시도해주세요.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  /*Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        selectedImages.add(pickedFile.path);
+      });
+    }
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1.0,
@@ -60,15 +112,16 @@ class _PostScreenState extends State<PostScreen> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: const TextField(
-                style: TextStyle(fontSize: 12),
-                decoration: InputDecoration(
+              child: TextField(
+                style: const TextStyle(fontSize: 12),
+                decoration: const InputDecoration(
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xffA9A9A9),
                     ),
                   ),
                 ),
+                controller: titleController,
               ),
             ),
             const SizedBox(height: 50.0),
@@ -84,8 +137,8 @@ class _PostScreenState extends State<PostScreen> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                decoration: const InputDecoration(
                   hintText: '게시물 내용을 작성해주세요 :)',
                   hintStyle: TextStyle(
                     color: Color(0xffD9D9D9),
@@ -94,6 +147,7 @@ class _PostScreenState extends State<PostScreen> {
                   filled: true,
                   fillColor: Colors.transparent,
                 ),
+                controller: contentController,
               ),
             ),
             const SizedBox(height: 70.0),
@@ -155,43 +209,58 @@ class _PostScreenState extends State<PostScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffD9D9D9),
-                  ),
-                  child: const Icon(
-                    Icons.photo_camera,
-                    size: 20,
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffD9D9D9),
-                  ),
-                  child: const Icon(
-                    Icons.photo_camera,
-                    size: 20,
+                GestureDetector(
+                  onTap: () {
+                    //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffD9D9D9),
+                    ),
+                    child: const Icon(
+                      Icons.photo_camera,
+                      size: 20,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   width: 20,
                 ),
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffD9D9D9),
+                GestureDetector(
+                  onTap: () {
+                    //_pickImage(ImageSource.gallery);
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffD9D9D9),
+                    ),
+                    child: const Icon(
+                      Icons.photo_camera,
+                      size: 20,
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.photo_camera,
-                    size: 20,
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //_pickImage(ImageSource.gallery);
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffD9D9D9),
+                    ),
+                    child: const Icon(
+                      Icons.photo_camera,
+                      size: 20,
+                    ),
                   ),
                 ),
               ],
@@ -227,7 +296,9 @@ class _PostScreenState extends State<PostScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // 동작 추가하기!
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 10),
@@ -243,7 +314,15 @@ class _PostScreenState extends State<PostScreen> {
                   width: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final postModel = PostModel(
+                      title: titleController.text,
+                      content: contentController.text,
+                      //imagePaths: selectedImages,
+                      location: dropdownValue,
+                    );
+                    _uploadPost(postModel);
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 10),

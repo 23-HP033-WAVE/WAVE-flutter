@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-// 0910 전
 /* 신고 게시물 상세 목록 */
-/* 앱바 리뉴얼 */
 /* 한 눈에 보기 */
 class PostAnalysis extends StatefulWidget {
   const PostAnalysis({Key? key}) : super(key: key);
@@ -157,6 +155,10 @@ class _PostAnalysisState extends State<PostAnalysis> {
                   ],
                 ),
               ],
+            ),
+            const SizedBox(
+              width: 20,
+              height: 50,
             ),
           ],
         ),
