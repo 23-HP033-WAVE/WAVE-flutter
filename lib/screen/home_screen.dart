@@ -226,8 +226,13 @@ PreferredSize renderAppBar() {
       ),
       actions: <Widget>[
         IconButton(
-          icon: const Icon(Icons.settings),
+          icon: const Icon(Icons.person),
           tooltip: '설정',
+          onPressed: () => {},
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings),
+          tooltip: '마이페이지',
           onPressed: () => {},
         )
       ],
