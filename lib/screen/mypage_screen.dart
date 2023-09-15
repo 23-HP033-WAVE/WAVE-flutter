@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widget/myAppBar.dart';
+import 'package:wave/screen/post_analysis_screen.dart';
+import 'package:wave/widgets/myAppBar.dart';
 import 'package:wave/screen/badge_screen.dart';
-import 'package:wave/screen/home_screen.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -66,18 +66,19 @@ class _MyPageState extends State<MyPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildButton(
-                  icon: Icons.home,
-                  text: '나의 홈',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
-                    );
-                  },
-                ),
-                const SizedBox(width: 20),
+                // _buildButton(
+                //   icon: Icons.badge,
+                //   text: '업적 배지',
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) =>
+                //               const BadgePage()), // BadgePage로 이동
+                //     );
+                //   },
+                // ),
+                //const SizedBox(width: 20),
                 _buildButton(
                   icon: Icons.list_alt_rounded,
                   text: '나의 목록',
@@ -90,7 +91,12 @@ class _MyPageState extends State<MyPage> {
                   icon: Icons.analytics_outlined,
                   text: '한눈에 보기',
                   onPressed: () {
-                    // 추가 필요
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const PostAnalysis()), // BadgePage로 이동
+                    );
                   },
                 ),
               ],
@@ -153,7 +159,7 @@ class _MyPageState extends State<MyPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        minimumSize: const Size(100, 100),
+        minimumSize: const Size(140, 80),
       ),
       onPressed: onPressed,
       child: Column(

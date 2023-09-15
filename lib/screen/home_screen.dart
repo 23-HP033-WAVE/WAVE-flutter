@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wave/models/post_title_model.dart';
+import 'package:wave/screen/mypage_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -227,13 +228,18 @@ PreferredSize renderAppBar(BuildContext context) {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.person),
-          tooltip: '설정',
-          onPressed: () => {},
+          tooltip: '마이페이지',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MyPage()),
+            );
+          },
         ),
         IconButton(
           icon: const Icon(Icons.settings),
-          tooltip: '마이페이지',
-          onPressed: () => {},
+          tooltip: '설정',
+          onPressed: () {},
         )
       ],
     ),

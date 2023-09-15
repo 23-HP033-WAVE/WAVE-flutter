@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wave/widgets/myAppBar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/post_model.dart'; // PostModel 클래스를 사용하기 위한 import 문
-import 'package:uuid/uuid.dart'; // UUID 생성을 위한 패키지 import 문
+import 'package:uuid/uuid.dart'; // UUID 생성을 위한 패키지 import문
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  String dropdownValue = '선택 안 함'; // 드롭다운 메뉴의 기본 값
+  String dropdownValue = '선택 안 함'; // 드롭다운 메뉴의 기본값
   List<String> itemList = [
     '선택 안 함',
     '강릉',
@@ -78,28 +79,7 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // 수정 필요 (그 myAppBar 위젯으로..)
-        backgroundColor: Colors.white,
-        elevation: 1.0,
-        centerTitle: true,
-        toolbarHeight: 80.0,
-        title: const Text(
-          '신고 등록하기',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            height: 1.0,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.black38,
-          ),
-          onPressed: () {},
-        ),
-      ),
+      appBar: const MyAppBar(titleText: '신고 등록하기'),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widget/myAppBar.dart';
+import 'package:wave/widgets/myAppBar.dart';
 
 class BadgePage extends StatefulWidget {
   const BadgePage({Key? key}) : super(key: key);
