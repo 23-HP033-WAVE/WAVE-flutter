@@ -1,3 +1,4 @@
+import 'package:wave/screen/post_analysis_screen.dart';
 import 'package:wave/screen/post_list_screen.dart';
 import 'package:wave/screen/post_screen.dart';
 import 'package:flutter/material.dart';
