@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widgets/myAppBar.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:wave/models/post_model.dart'; // PostModel 클래스를 사용하기 위한 import 문
-import 'package:uuid/uuid.dart'; // UUID 생성을 위한 패키지 import문
+import 'package:wave/models/post_model.dart';
+import 'package:uuid/uuid.dart';
+import 'package:wave/widgets/myAppBar.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -13,7 +15,7 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  String dropdownValue = '선택 안 함'; // 드롭다운 메뉴의 기본값
+  String dropdownValue = '선택 안 함'; // 드롭다운 메뉴 기본값
   List<String> itemList = [
     '선택 안 함',
     '강릉',
@@ -21,27 +23,41 @@ class _PostScreenState extends State<PostScreen> {
     '인천',
     '동막해변',
     '서울',
-  ]; // 드롭다운 메뉴의 항목 리스트
+  ];
 
-  TextEditingController subjectController =
-      TextEditingController(); // 게시물 제목을 입력하는 컨트롤러
-  TextEditingController contentController =
-      TextEditingController(); // 게시물 내용을 입력하는 컨트롤러
-  TextEditingController imageKeyController =
-      TextEditingController(); // 이미지 키를 입력하는 컨트롤러
-  TextEditingController addressController =
-      TextEditingController(); // 주소를 입력하는 컨트롤러
+  TextEditingController subjectController = TextEditingController(); // 제목
+  TextEditingController contentController = TextEditingController(); // 내용
+  TextEditingController imageKeyController = TextEditingController(); // 이미지
+  TextEditingController addressController = TextEditingController(); // 주소
 
   // 임시 사용자 ID 생성
-  // 로그인을 안 만들어서 이걸로 UserID 대신 사용 (랜덤 값 기반인 v4가 제일 많이 사용된다 함)
-  String temporaryUserId = const Uuid().v4(); // UUID를 사용하여 임시 사용자 ID 생성
+  // 로그인을 안 만들었으니까.. 이걸로 UserID 대신 사용 (랜덤 값 기반인 v4가 제일 많이 사용된다 함)
+  String temporaryUserId = const Uuid().v4();
 
   // 갤러리에서 선택한 이미지 경로 저장용 list
-  //List<String> selectedImages = [];
+  List<String> selectedImages = [];
+
+  // 이미지 선택 후 표시 위해 생성
+  Image? selectedImage;
+
+  // 이미지 선택하기!
+  Future<void> _pickImage(ImageSource source) async {
+    final imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      // 이미지를 선택하면 경로를 컨트롤러에 설정
+      imageKeyController.text = pickedFile.path;
+
+      setState(() {
+        selectedImage = Image.file(File(pickedFile.path));
+      });
+    }
+  }
 
   Future<void> _uploadPost(PostModel postModel) async {
-    final url = Uri.parse(
-        'https://my-json-server.typicode.com/dankim-dev/api-test/db'); // 백엔드 API 주소로 변경하기!!
+    final url =
+        Uri.parse('http://127.0.0.1:5000/posts/create'); // 백엔드 API 주소로 변경하기!!
 
     // 임시 사용자 ID -> postModel에 추가 위해서 copyWith사용
     postModel = postModel.copyWith(userId: temporaryUserId);
@@ -63,7 +79,7 @@ class _PostScreenState extends State<PostScreen> {
           duration: Duration(seconds: 3),
         ),
       );
-      // 성공 시 다른 화면 이동 필요!!
+      // 등록 성공 시 다른 화면 이동 필요!!
     } else {
       // Post 실패 시
       if (!mounted) return;
@@ -196,56 +212,27 @@ class _PostScreenState extends State<PostScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기 (아직 구현안함)
+                    _pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택가능
                   },
                   child: Container(
-                    width: 80,
-                    height: 80,
+                    width: 130,
+                    height: 130,
                     decoration: const BoxDecoration(
                       color: Color(0xffD9D9D9),
                     ),
-                    child: const Icon(
-                      Icons.photo_camera,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffD9D9D9),
-                    ),
-                    child: const Icon(
-                      Icons.photo_camera,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffD9D9D9),
-                    ),
-                    child: const Icon(
-                      Icons.photo_camera,
-                      size: 20,
-                    ),
+                    child:
+                        imageKeyController.text.isNotEmpty // 이미지 경로가 비어있지 않으면
+                            ? Image.file(
+                                // 선택된 이미지 표시
+                                File(imageKeyController.text),
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(
+                                Icons.photo_camera,
+                                size: 20,
+                              ),
                   ),
                 ),
               ],
@@ -258,7 +245,7 @@ class _PostScreenState extends State<PostScreen> {
                 left: 0,
               ),
               child: const Text(
-                '이미지 파일(GIF, PNG, JPG)를 기준으로 최대 \n10MB 이하 최대 3개까지 첨부 가능합니다.',
+                '이미지 파일(GIF, PNG, JPG)를 기준으로 \n최대 10MB 이하만 첨부 가능합니다.',
                 style: TextStyle(
                   color: Color(0xffD9D9D9),
                   fontSize: 14,
@@ -303,7 +290,7 @@ class _PostScreenState extends State<PostScreen> {
                     final postModel = PostModel(
                       subject: subjectController.text,
                       content: contentController.text,
-                      //imageKey: imageKeyController.text,
+                      imageKey: imageKeyController.text,
                       address: dropdownValue,
                       userId: temporaryUserId,
                     );
