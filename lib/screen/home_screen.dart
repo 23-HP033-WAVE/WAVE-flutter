@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wave/models/post_title_model.dart';
+import 'package:wave/screen/mypage_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: renderAppBar(),
+      appBar: renderAppBar(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 8.0,
@@ -200,7 +201,7 @@ Center checkLists() {
 }
 
 // AppBar부분 구현 함수
-PreferredSize renderAppBar() {
+PreferredSize renderAppBar(BuildContext context) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(64),
     child: AppBar(
@@ -227,13 +228,18 @@ PreferredSize renderAppBar() {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.person),
-          tooltip: '설정',
-          onPressed: () => {},
+          tooltip: '마이페이지',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MyPage()),
+            );
+          },
         ),
         IconButton(
           icon: const Icon(Icons.settings),
-          tooltip: '마이페이지',
-          onPressed: () => {},
+          tooltip: '설정',
+          onPressed: () {},
         )
       ],
     ),
