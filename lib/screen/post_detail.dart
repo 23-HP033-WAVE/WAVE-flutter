@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 /* 신고 게시물 상세 목록 */
 /* 앱바 위젯 변경 */
-class PostAnalysis extends StatefulWidget {
-  const PostAnalysis({Key? key}) : super(key: key);
+class PostDetail extends StatefulWidget {
+  const PostDetail({Key? key}) : super(key: key);
 
   @override
-  State<PostAnalysis> createState() => _PostAnalysisState();
+  State<PostDetail> createState() => _PostDetailState();
 }
 
-class _PostAnalysisState extends State<PostAnalysis> {
+class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
