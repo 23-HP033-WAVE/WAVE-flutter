@@ -83,9 +83,9 @@ class _TabPageState extends State<TabPage> {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.favorite,
+            Icons.bar_chart,
           ),
-          label: '한눈에 보기',
+          label: '분석 리포트',
         ),
       ],
     );
