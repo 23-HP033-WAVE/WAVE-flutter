@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:wave/models/post_model.dart';
+import 'package:wave/models/post_model.dart'; // PostModel 클래스를 사용하기 위한 import 문
+import 'package:uuid/uuid.dart'; // UUID 생성을 위한 패키지 import 문
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  String dropdownValue = '선택 안 함';
+  String dropdownValue = '선택 안 함'; // 드롭다운 메뉴의 기본 값
   List<String> itemList = [
     '선택 안 함',
     '강릉',
@@ -19,16 +20,30 @@ class _PostScreenState extends State<PostScreen> {
     '인천',
     '동막해변',
     '서울',
-  ];
+  ]; // 드롭다운 메뉴의 항목 리스트
 
-  TextEditingController titleController = TextEditingController();
-  TextEditingController contentController = TextEditingController();
+  TextEditingController subjectController =
+      TextEditingController(); // 게시물 제목을 입력하는 컨트롤러
+  TextEditingController contentController =
+      TextEditingController(); // 게시물 내용을 입력하는 컨트롤러
+  TextEditingController imageKeyController =
+      TextEditingController(); // 이미지 키를 입력하는 컨트롤러
+  TextEditingController addressController =
+      TextEditingController(); // 주소를 입력하는 컨트롤러
 
-  //List<String> selectedImages = []; // 갤러리에서 선택한 이미지 경로 저장용 list
+  // 임시 사용자 ID 생성
+  // 로그인을 안 만들어서 이걸로 UserID 대신 사용 (랜덤 값 기반인 v4가 제일 많이 사용된다 함)
+  String temporaryUserId = const Uuid().v4(); // UUID를 사용하여 임시 사용자 ID 생성
+
+  // 갤러리에서 선택한 이미지 경로 저장용 list
+  //List<String> selectedImages = [];
 
   Future<void> _uploadPost(PostModel postModel) async {
-    final url =
-        Uri.parse('https://jsonplaceholder.typicode.com/posts'); //주소 수정해
+    final url = Uri.parse(
+        'https://my-json-server.typicode.com/dankim-dev/api-test/db'); // 백엔드 API 주소로 변경하기!!
+
+    // 임시 사용자 ID -> postModel에 추가 위해서 copyWith사용
+    postModel = postModel.copyWith(userId: temporaryUserId);
 
     final response = await http.post(
       url,
@@ -39,7 +54,7 @@ class _PostScreenState extends State<PostScreen> {
     );
 
     if (response.statusCode == 200) {
-      //post 성공 시
+      // Post 성공 시
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -47,9 +62,9 @@ class _PostScreenState extends State<PostScreen> {
           duration: Duration(seconds: 3),
         ),
       );
-      // 성공 시 다른 화면 이동 필요
+      // 성공 시 다른 화면 이동 필요!!
     } else {
-      // post 실패 시
+      // Post 실패 시
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -60,21 +75,11 @@ class _PostScreenState extends State<PostScreen> {
     }
   }
 
-  /*Future<void> _pickImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: source);
-
-    if (pickedFile != null) {
-      setState(() {
-        selectedImages.add(pickedFile.path);
-      });
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // 수정 필요 (그 myAppBar 위젯으로..)
         backgroundColor: Colors.white,
         elevation: 1.0,
         centerTitle: true,
@@ -121,7 +126,7 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ),
                 ),
-                controller: titleController,
+                controller: subjectController,
               ),
             ),
             const SizedBox(height: 50.0),
@@ -211,6 +216,25 @@ class _PostScreenState extends State<PostScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기 (아직 구현안함)
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffD9D9D9),
+                    ),
+                    child: const Icon(
+                      Icons.photo_camera,
+                      size: 20,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
                     //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기
                   },
                   child: Container(
@@ -230,26 +254,7 @@ class _PostScreenState extends State<PostScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //_pickImage(ImageSource.gallery);
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffD9D9D9),
-                    ),
-                    child: const Icon(
-                      Icons.photo_camera,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //_pickImage(ImageSource.gallery);
+                    //_pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택하기
                   },
                   child: Container(
                     width: 80,
@@ -273,7 +278,7 @@ class _PostScreenState extends State<PostScreen> {
                 left: 0,
               ),
               child: const Text(
-                '이미지 파일(GIF, PNG, JPG)를 기준으로 최대 \n10MB이하 최대 3개까지 첨부 가능합니다.',
+                '이미지 파일(GIF, PNG, JPG)를 기준으로 최대 \n10MB 이하 최대 3개까지 첨부 가능합니다.',
                 style: TextStyle(
                   color: Color(0xffD9D9D9),
                   fontSize: 14,
@@ -297,7 +302,7 @@ class _PostScreenState extends State<PostScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // 동작 추가하기!
+                    // 취소 버튼 동작 추가하기!
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -316,10 +321,11 @@ class _PostScreenState extends State<PostScreen> {
                 ElevatedButton(
                   onPressed: () {
                     final postModel = PostModel(
-                      title: titleController.text,
+                      subject: subjectController.text,
                       content: contentController.text,
-                      //imagePaths: selectedImages,
-                      location: dropdownValue,
+                      //imageKey: imageKeyController.text,
+                      address: dropdownValue,
+                      userId: temporaryUserId,
                     );
                     _uploadPost(postModel);
                   },
