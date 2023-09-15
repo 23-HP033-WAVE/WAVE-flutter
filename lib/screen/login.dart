@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wave/main.dart';
 import 'package:wave/screen/signup.dart';
-// import 'package:wave_login/screens/signup.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:wave/models/login_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final idController = TextEditingController();
   final passwordController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,79 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       userInput(idController, 'ID', TextInputType.emailAddress),
                       userInput(passwordController, 'Password',
                           TextInputType.visiblePassword),
-                      // // 이부분 진영 userInput위젯으로 리팩토링
-                      // Positioned(
-                      //   top: 520,
-                      //   right: 0,
-                      //   left: 0,
-                      //   child: Align(
-                      //     alignment: Alignment.topCenter,
-                      //     child: Container(
-                      //       width: 350,
-                      //       height: 60,
-                      //       decoration: BoxDecoration(
-                      //         color: Colors.white,
-                      //         borderRadius: BorderRadius.circular(25),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //             color: Colors.grey.withOpacity(0.5),
-                      //             spreadRadius: 2,
-                      //             blurRadius: 4,
-                      //             offset: const Offset(0, 2),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       child: const TextField(
-                      //         style: TextStyle(
-                      //           fontSize: 20,
-                      //         ),
-                      //         decoration: InputDecoration(
-                      //           border: InputBorder.none,
-                      //           hintText: 'ID',
-                      //           hintStyle: TextStyle(color: Colors.grey),
-                      //           contentPadding:
-                      //               EdgeInsets.symmetric(horizontal: 18),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Positioned(
-                      //   top: 600,
-                      //   right: 0,
-                      //   left: 0,
-                      //   child: Align(
-                      //     alignment: Alignment.topCenter,
-                      //     child: Container(
-                      //       width: 350,
-                      //       height: 60,
-                      //       decoration: BoxDecoration(
-                      //         color: Colors.white,
-                      //         borderRadius: BorderRadius.circular(25),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //             color: Colors.grey.withOpacity(0.5),
-                      //             spreadRadius: 2,
-                      //             blurRadius: 4,
-                      //             offset: const Offset(0, 2),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       child: const TextField(
-                      //         style: TextStyle(
-                      //           fontSize: 20,
-                      //         ),
-                      //         decoration: InputDecoration(
-                      //           border: InputBorder.none,
-                      //           hintText: 'Password',
-                      //           hintStyle: TextStyle(color: Colors.grey),
-                      //           contentPadding:
-                      //               EdgeInsets.symmetric(horizontal: 18),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       Container(
                         height: 55,
                         padding:
@@ -164,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: const Color(0xff72B8C1),
                           ),
                           onPressed: () {
+                            // _login(context);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -301,5 +232,67 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _login(BuildContext context) async {
+    final id = idController.text;
+    final password = passwordController.text;
+
+    // 서버쪽 URL
+    final url = Uri.parse('https://어쩌구 저쩌구/login');
+
+    final loginModel = LoginModel(userId: id, password: password);
+    // // 로그인 데이터
+    // final Map<String, String> data = {
+    //   'id': id,
+    //   'password': password,
+    // };
+
+    // ScaffoldMessenger를 이용하여 SnackBar를 표시
+    final scaffoldContext = _scaffoldKey.currentContext;
+    ScaffoldMessenger.of(scaffoldContext!).showSnackBar(
+      const SnackBar(
+        content: Text('로그인 중...'),
+      ),
+    );
+
+    final response = await http.post(
+      url,
+      body: jsonEncode(loginModel.toJson()), // JSON 형태로 전송
+      headers: {'Content-Type': 'application/json'}, // 헤더
+    );
+
+    if (response.statusCode == 200) {
+      // http OK 응답 시
+      final responseData = jsonDecode(response.body);
+      final status = responseData['status'];
+      // 로그인 성공
+      if (status == 'success') {
+        final userId = responseData['user_id']; // 플라스크에 userId가 어떻게 저장되었는지 보기
+        if (!mounted) return; // 비동기 시 async뒤에 context에 null값 있을 수 있으므로
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('로그인 성공! 사용자 ID: $userId'),
+              duration: const Duration(seconds: 2)),
+        );
+      } else {
+        final message = responseData['message'];
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('로그인 실패: $message'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } else {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('서버 오류: ${response.statusCode}'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 }
