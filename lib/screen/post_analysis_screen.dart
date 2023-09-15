@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/resources/app_colors.dart';
+import 'package:wave/widget/myAppBar.dart';
 import 'package:wave/widgets/indicator.dart';
 // import 'package:fl_chart_app/presentation/widgets/indicator.dart';
 // import 'package:fl_chart_app/presentation/resources/app_resources.dart';
@@ -13,98 +14,18 @@ class PostAnalysis extends StatefulWidget {
 }
 
 class _PostAnalysisState extends State<PostAnalysis> {
-  // 가상의 데이터 -> 안씀
-  final List<PieChartSectionData> pieChartSections = [
-    PieChartSectionData(
-      value: 30,
-      title: '유리병',
-      color: Colors.blue,
-      titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-    PieChartSectionData(
-      value: 25,
-      title: '종이',
-      color: Colors.green,
-      titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-    PieChartSectionData(
-      value: 20,
-      title: '플라스틱',
-      color: Colors.orange,
-      titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-    PieChartSectionData(
-      value: 15,
-      title: '금속',
-      color: Colors.red,
-      titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-    PieChartSectionData(
-      value: 10,
-      title: '기타',
-      color: Colors.purple,
-      titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-  ];
-
   int touchedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(64),
-        child: AppBar(
-          backgroundColor: AppColors.contentColorLightBlue,
-          title: const Padding(
-            padding: EdgeInsets.only(top: 18.0),
-            child: Text('나의 분석 리포트'),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.person),
-              tooltip: '설정',
-              onPressed: () => {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              tooltip: '마이페이지',
-              onPressed: () => {},
-            )
-          ],
-        ),
-      ),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(64),
+          child: MyAppBar(
+            titleText: '나의 분석 리포트',
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 40,
-            ),
-            const Center(
-              child: CircleAvatar(
-                backgroundColor: Color(0xff1B818F),
-                radius: 70,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 55,
-                  child: CircleAvatar(
-                    radius: 50,
-                    // backgroundImage: AssetImage('assets/images/logo.png'),
-                    backgroundImage:
-                        NetworkImage('https://picsum.photos/id/237/200/300'),
-                  ),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Text(
-                '나의 분석 리포트',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                ),
-              ),
-            ),
             Row(
               children: [
                 Center(
