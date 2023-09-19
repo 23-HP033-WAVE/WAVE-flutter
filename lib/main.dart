@@ -1,9 +1,9 @@
-import 'package:wave/screen/post_analysis_screen.dart';
 import 'package:wave/screen/post_list_screen.dart';
 import 'package:wave/screen/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/screen/splash_screen.dart';
 import 'package:wave/screen/home_screen.dart';
+import 'package:wave/screen/post_analysis_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +38,7 @@ class _TabPageState extends State<TabPage> {
             HomeScreen(),
             PostScreen(),
             PostList(),
-            PostAnalysis(), //PostDetail(),
+            PostAnalysis(), //PostDetail(), PostAnalysis()
           ],
         ),
         bottomNavigationBar: buildBottomNavigationBar(),
