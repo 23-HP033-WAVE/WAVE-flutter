@@ -1,11 +1,12 @@
 import 'package:wave/screen/post_list_screen.dart';
 import 'package:wave/screen/post_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:wave/screen/splash_screen.dart';
 import 'package:wave/screen/home_screen.dart';
 import 'package:wave/screen/post_analysis_screen.dart';
 
 void main() {
+  // for test
+  // ApiService().getReports();
   runApp(const MyApp());
 }
 
@@ -14,8 +15,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SplashScreen(),
+    return MaterialApp(
+      home: PostList(), // 임시 SplashScreen
     );
   }
 }
@@ -34,9 +35,9 @@ class _TabPageState extends State<TabPage> {
       child: Scaffold(
         body: IndexedStack(
           index: _selectedIndex,
-          children: const [
-            HomeScreen(),
-            PostScreen(),
+          children: [
+            const HomeScreen(),
+            const PostScreen(),
             PostList(),
             PostAnalysis(), //PostDetail(), PostAnalysis()
           ],
