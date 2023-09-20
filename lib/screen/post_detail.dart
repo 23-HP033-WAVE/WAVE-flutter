@@ -51,7 +51,7 @@ class _PostDetailState extends State<PostDetail> {
                       ),
                     ),
                     Text(
-                      '대한민국 : 강릉',
+                      '대한민국 : 강릉 - 완료됨',
                     ),
                   ],
                 ),
@@ -67,12 +67,16 @@ class _PostDetailState extends State<PostDetail> {
                 ],
                 rows: const [
                   DataRow(cells: [
-                    DataCell(Text('신고 장소')),
-                    DataCell(Text('강릉')),
+                    DataCell(Text('신고 제목')),
+                    DataCell(Text('쓰레기를 치워주세요!!')),
                   ]),
                   DataRow(cells: [
                     DataCell(Text('신고 내용')),
-                    DataCell(Text('강문해변에 알 수 없는 쓰레기 무덤🦈')),
+                    DataCell(Text('강문해변에 알 수 없는 쓰레기 무덤')),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('신고 장소')),
+                    DataCell(Text('강릉')),
                   ]),
                   DataRow(cells: [
                     DataCell(Text('처리 기관')),
@@ -84,7 +88,7 @@ class _PostDetailState extends State<PostDetail> {
                   ]),
                   DataRow(cells: [
                     DataCell(Text('처리 날짜')),
-                    DataCell(Text('2023.07.25')),
+                    DataCell(Text('2023.09.21')),
                   ]),
                 ],
               ),
@@ -99,8 +103,8 @@ class _PostDetailState extends State<PostDetail> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        'assets/images/trash.png',
-                        width: 150,
+                        'assets/images/detect_after.png',
+                        width: 170,
                         height: 150,
                       ),
                     ),
@@ -119,8 +123,8 @@ class _PostDetailState extends State<PostDetail> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        'assets/images/after_trash.png',
-                        width: 180,
+                        'assets/images/trash_after.JPG',
+                        width: 170,
                         height: 150,
                       ),
                     ),

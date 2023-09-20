@@ -90,7 +90,7 @@ class _PostScreenState extends State<PostScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('게시물 등록에 실패했습니다. 다시 시도해주세요.'),
+          content: Text('게시물이 성공적으로 등록되었습니다.'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -239,8 +239,8 @@ class _PostScreenState extends State<PostScreen> {
                     _pickImage(ImageSource.gallery); // 갤러리에서 이미지 선택
                   },
                   child: Container(
-                    width: 130,
-                    height: 130,
+                    width: 170,
+                    height: 170,
                     decoration: const BoxDecoration(
                       color: Color(0xffD9D9D9),
                     ),
@@ -249,8 +249,8 @@ class _PostScreenState extends State<PostScreen> {
                             ? Image.file(
                                 // 선택된 이미지 표시
                                 File(imageKeyController.text),
-                                width: 100,
-                                height: 100,
+                                width: 170,
+                                height: 170,
                                 fit: BoxFit.cover,
                               )
                             : const Icon(
