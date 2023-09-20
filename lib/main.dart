@@ -3,6 +3,7 @@ import 'package:wave/screen/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/screen/home_screen.dart';
 import 'package:wave/screen/post_analysis_screen.dart';
+import 'package:wave/screen/splash_screen.dart';
 
 void main() {
   // for test
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PostList(), // 임시 SplashScreen
+    return const MaterialApp(
+      home: SplashScreen(), // 임시 SplashScreen
     );
   }
 }
@@ -39,7 +40,7 @@ class _TabPageState extends State<TabPage> {
             const HomeScreen(),
             const PostScreen(),
             PostList(),
-            PostAnalysis(), //PostDetail(), PostAnalysis()
+            const PostAnalysis(), //PostDetail(), PostAnalysis()
           ],
         ),
         bottomNavigationBar: buildBottomNavigationBar(),
