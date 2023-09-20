@@ -31,7 +31,9 @@ class _PostDetailState extends State<PostDetail> {
             Icons.arrow_back_ios_new,
             color: Colors.black38,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SingleChildScrollView(

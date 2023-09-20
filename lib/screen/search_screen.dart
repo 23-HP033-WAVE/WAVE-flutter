@@ -13,42 +13,7 @@ class SearchScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/logo.png',
-                  width: 48, // 이미지의 너비 설정
-                  height: 48, // 이미지의 높이 설정
-                ),
-                const SizedBox(width: 12), // 아이콘과 검색 필드 사이의 간격
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: TextField(   
-                      textAlignVertical: TextAlignVertical.center,
-                      // 검색 필드
-                      decoration: InputDecoration(
-                        hintText: '쓰레기 종류나 지역을 검색해보세요!',
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.8),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    // 검색 버튼을 눌렀을 때의 동작 추가
-                  },
-                ),
-              ],
-            ),
+            const SearchField(),
             const SizedBox(
               height: 10,
             ),
@@ -150,6 +115,57 @@ class RecentSearchWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SearchField extends StatelessWidget {
+  const SearchField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(
+          'assets/images/logo.png',
+          width: 48, // 이미지의 너비 설정
+          height: 48, // 이미지의 높이 설정
+        ),
+        const SizedBox(width: 12), // 아이콘과 검색 필드 사이의 간격
+        Expanded(
+          child: SizedBox(
+            height: 48,
+            // error
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => const SearchScreen())),
+              child: TextField(
+                textAlignVertical: TextAlignVertical.center,
+                // 검색 필드
+                decoration: InputDecoration(
+                  hintText: '쓰레기 종류나 지역을 검색해보세요!',
+                  hintStyle: TextStyle(
+                    color: Colors.grey.withOpacity(0.8),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            // 검색 버튼을 눌렀을 때의 동작 추가
+          },
+        ),
+      ],
     );
   }
 }

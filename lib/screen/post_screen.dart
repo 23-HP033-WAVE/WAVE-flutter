@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widgets/myAppBar.dart';
+import 'package:wave/widgets/my_appbar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/post_model.dart'; // PostModel 클래스를 사용하기 위한 import 문
