@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widgets/myAppBar.dart';
+import 'package:wave/widgets/my_appbar.dart';
 
 /* Post_Screen에서 등록하기 버튼 눌렀을 때 나오는 신고한 내용 */
 

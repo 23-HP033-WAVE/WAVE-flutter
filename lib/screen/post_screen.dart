@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/post_model.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wave/widgets/myAppBar.dart';
+import 'package:wave/widgets/my_appbar.dart';
 import 'package:wave/screen/my_posted_screen.dart';
 
 class PostScreen extends StatefulWidget {
