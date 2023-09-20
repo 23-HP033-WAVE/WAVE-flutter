@@ -110,8 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.white,
                       border: Border.all(width: 1),
                       borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(
                       vertical: 10,
                       horizontal: 10,
                     ),
@@ -119,40 +119,45 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
-                            const CheckboxExample(),
-                            FutureBuilder<Album>(
-                              future: futureAlbum,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text(snapshot.data!.title);
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
+                            IsCheckedboxExample(),
+                            Text("경포해변 유리 조각에 다칠뻔 했어요ㅜㅜ"),
+                            // FutureBuilder<Album>(
+                            //   future: futureAlbum,
+                            //   builder: (context, snapshot) {
+                            //     if (snapshot.hasData) {
+                            //       // return Text(snapshot.data!.title); // 임시로 주석처리
+                            //       return const Text("경포해변 유리 조각에 다칠뻔 했어요ㅜㅜ");
+                            //     } else if (snapshot.hasError) {
+                            //       return Text('${snapshot.error}');
+                            //     }
 
-                                // By default, show a loading spinner.
-                                return const CircularProgressIndicator();
-                              },
-                            )
+                            //     // By default, show a loading spinner.
+                            //     return const CircularProgressIndicator();
+                            //   },
+                            // )
                           ],
                         ),
-                        const Row(
+                        Row(
                           children: [
-                            CheckboxExample(),
+                            IsCheckedboxExample(),
                             Text('쓰레기 더미가 너무 많아서 미관상 안 좋네요'),
                           ],
                         ),
-                        const Row(
+                        Row(
                           children: [
-                            CheckboxExample(),
+                            IsCheckedboxExample(),
                             Text('누군가가 쓰레기를 버렸나봐요.. 쓰레기가 ...'),
                           ],
                         ),
-                        const Center(
+                        Center(
                           child: Icon(
                             Icons.more_horiz,
                           ),
                         ),
-                        const Text('게시물을 클릭하면 자세한 확인이 가능합니다.')
+                        Text('게시물을 클릭하면 자세한 확인이 가능합니다.'),
+                        SizedBox(
+                          height: 10,
+                        )
                       ],
                     ),
                   ),
@@ -190,7 +195,7 @@ Center checkLists() {
             Row(
               children: [
                 CheckboxExample(),
-                Text('강릉 강문해변에 알 수 없는 쓰레기 무덤😫'),
+                Text('각종 쓰레기가 너무 많습니다.'),
               ],
             ),
           ],
@@ -244,6 +249,43 @@ PreferredSize renderAppBar(BuildContext context) {
       ],
     ),
   );
+}
+
+class IsCheckedboxExample extends StatefulWidget {
+  const IsCheckedboxExample({super.key});
+
+  @override
+  State<IsCheckedboxExample> createState() => _IsCheckedboxExampleState();
+}
+
+class _IsCheckedboxExampleState extends State<IsCheckedboxExample> {
+  bool isChecked = true;
+
+  @override
+  Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.red; // 색상 적용 안됨
+      }
+      return Colors.blue;
+    }
+
+    return Checkbox(
+      checkColor: Colors.white,
+      fillColor: MaterialStateProperty.resolveWith(getColor),
+      value: isChecked,
+      onChanged: (bool? value) {
+        setState(() {
+          isChecked = value!;
+        });
+      },
+    );
+  }
 }
 
 class CheckboxExample extends StatefulWidget {
