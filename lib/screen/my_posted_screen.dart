@@ -83,7 +83,7 @@ class _MyPostedState extends State<MyPosted> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
-                      'assets/images/detect_before.jpg',
+                      'assets/images/detect_after.png',
                       width: 220,
                       height: 220,
                     ),
