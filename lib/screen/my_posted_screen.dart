@@ -67,7 +67,7 @@ class _MyPostedState extends State<MyPosted> {
                 rows: const [
                   DataRow(cells: [
                     DataCell(Text('게시물 내용')),
-                    DataCell(Text('강문해변에 알 수 없는 쓰레기 무덤🦈')),
+                    DataCell(Text('강문해변에 알 수 없는 쓰레기 무덤')),
                   ]),
                   DataRow(cells: [
                     DataCell(Text('위치 분류')),
