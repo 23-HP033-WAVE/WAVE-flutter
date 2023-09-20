@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wave/widgets/myAppBar.dart';
 
 /* 신고 게시물 상세 목록 */
-/* 앱바 위젯 변경 */
+
 class PostDetail extends StatefulWidget {
   const PostDetail({Key? key}) : super(key: key);
 
@@ -13,27 +14,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1.0,
-        centerTitle: true,
-        toolbarHeight: 80.0,
-        title: const Text(
-          '신고 게시물 상세 목록',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            height: 1.0,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.black38,
-          ),
-          onPressed: () {},
-        ),
-      ),
+      appBar: const MyAppBar(titleText: '신고 게시물 상세 목록'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,8 +58,7 @@ class _PostDetailState extends State<PostDetail> {
               ],
             ),
             const SizedBox(height: 20),
-
-            // 데이터 테이블 추가
+            // 데이터 테이블
             Center(
               child: DataTable(
                 columns: const [
@@ -109,7 +89,6 @@ class _PostDetailState extends State<PostDetail> {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

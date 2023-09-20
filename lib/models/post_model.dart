@@ -1,14 +1,14 @@
 class PostModel {
   final String subject;
   final String content;
-  //final String imageKey;
+  final String imageKey;
   final String address;
   final String userId;
 
   PostModel({
     required this.subject,
     required this.content,
-    //required this.imageKey,
+    required this.imageKey,
     required this.address,
     required this.userId,
   });
@@ -17,14 +17,14 @@ class PostModel {
   PostModel copyWith({
     String? subject,
     String? content,
-    //String? imageKey,
+    String? imageKey,
     String? address,
     String? userId,
   }) {
     return PostModel(
       subject: subject ?? this.subject,
       content: content ?? this.content,
-      //imageKey: imageKey ?? this.imageKey,
+      imageKey: imageKey ?? this.imageKey,
       address: address ?? this.address,
       userId: userId ?? this.userId,
     );
@@ -34,7 +34,7 @@ class PostModel {
     return {
       'subject': subject,
       'content': content,
-      //'image_key': imageKey,
+      'image_key': imageKey,
       'address': address,
       'user_id': userId,
     };
