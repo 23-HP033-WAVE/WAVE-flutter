@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 
 /* Post_Screen에서 등록하기 버튼 눌렀을 때 나오는 신고한 내용 */
 
@@ -14,7 +14,7 @@ class _MyPostedState extends State<MyPosted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(titleText: '신고한 내용'),
+      appBar: const MyAppBar(titleText: '신고 게시물'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +57,7 @@ class _MyPostedState extends State<MyPosted> {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
             Center(
               child: DataTable(
                 columns: const [
