@@ -5,7 +5,7 @@ import 'package:wave/screen/my_posted_screen.dart';
 import 'package:wave/screen/post_detail.dart';
 import 'package:wave/screen/search_screen.dart';
 import 'package:wave/services/api_service.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 
 // 빠른 개발을 위해 post_list_screen 복붙 후 수정함 .. 코드 더러움 ㅠㅠ//
 

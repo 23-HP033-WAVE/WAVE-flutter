@@ -4,7 +4,7 @@ import 'package:wave/screen/home_screen.dart';
 import 'package:wave/screen/post_detail.dart';
 import 'package:wave/screen/search_screen.dart';
 import 'package:wave/services/api_service.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_without_back.dart';
 
 class PostList extends StatelessWidget {
   PostList({Key? key}) : super(key: key);
@@ -55,7 +55,7 @@ class PostList extends StatelessWidget {
   }
 
   ListView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
-    var counter = 0; // 이미지 접근을 위한 변수
+    // var counter = 0; // 이미지 접근을 위한 변수 (아래에서 선언)
     // 신고 게시물 더미 데이터
     List<Map<String, dynamic>> reportlist = [
       {
@@ -116,8 +116,18 @@ class PostList extends StatelessWidget {
       itemBuilder: (context, index) {
         // futurebuilder와 비슷하지만 index로 요소에 접근함.
         // var webtoon = snapshot.data![index]; // 임시
+        var counter = index + 1;
+        // counter += 1;
 
-        counter += 1;
+        /* ListView makeList 부분에서 var counter = 0; 정의한 후 
+        counter += 1; 했을 때 그냥 이 화면만 불러오는 건 문제가 안 되는데,
+        신고 등록 페이지에서 액션을 취하면 thumb8.jpg가 생성되고, 
+        thumb7까지만 로컬에 있으니까 디버깅 시 오류가 발생하는 듯요...
+        뭔가 post list도 임시로 데이터 넣었고 
+        post screen도 api 연결 안 되어있는 상태로 있다 보니 그 사이에서 뭔가 오류나는 게 아닌가..
+        그래서 그냥 여기서 임시로 counter = index + 1로 바꿨어요 
+        애초에 인덱스가 0~5까지 있으니 딱 thumb1 ~ thumb6 가져오도록.. */
+
         return Row(
           children: [
             Container(
@@ -148,7 +158,8 @@ class PostList extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          reportlist[0]["title"],
+                          reportlist[index]["title"],
+                          // 다 index로 수정하면 됩니당!
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -161,36 +172,34 @@ class PostList extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Text(
-                        reportlist[0]["content"],
+                        reportlist[index]["content"],
                         style: const TextStyle(
                           color: Color.fromARGB(255, 109, 109, 109),
                           fontSize: 12,
                           fontWeight: FontWeight.w200,
                         ),
                       ),
-                    ), // 임시
+                    ),
                     Text(
-                      '게시 일자: ${reportlist[0]["date"]}',
+                      '게시 일자: ${reportlist[index]["date"]}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
-                    ), // 임시
+                    ),
                     Text(
-                      '작성자: ${reportlist[0]["작성자"]}',
+                      '작성자: ${reportlist[index]["작성자"]}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
-                    ), // 임시
+                    ),
                   ],
                 ),
               ),
-            ), // 임시
-
-            // Text(reportlist[index]["title"]) // 에러 이유 모르겠음
+            ),
           ],
         );
       },

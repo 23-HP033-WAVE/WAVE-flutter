@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/post_model.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_without_back.dart';
 import 'package:wave/screen/my_posted_screen.dart';
 
 class PostScreen extends StatefulWidget {
@@ -44,6 +44,8 @@ class _PostScreenState extends State<PostScreen> {
   // 임시 더미데이터 (모델 분류 결과) 보여주기 위해
   // 이미지 변경 여부를 나타내는 변수
   bool isResultImageVisible = false;
+  // CircularProgressIndicator 사용 위해
+  bool isLoading = false;
 
   // 이미지 선택하기
   Future<void> _pickImage(ImageSource source) async {
@@ -95,6 +97,20 @@ class _PostScreenState extends State<PostScreen> {
         ),
       );
     }
+  }
+
+  // "쓰레기 분류하기" 버튼을 눌렀을 때 호출되는 함수
+  void _classifyTrash() {
+    setState(() {
+      isResultImageVisible = false; // 딜레이 동안 결과 숨기기 (false로 해서)
+      isLoading = true; // 로딩 상태 시작
+    });
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        isResultImageVisible = true; // 결과 다시 표시
+        isLoading = false; // 로딩 상태 종료
+      });
+    });
   }
 
   // 등록하기 버튼을 눌렀을 때 화면 전환
@@ -290,10 +306,7 @@ class _PostScreenState extends State<PostScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                // 분류하기 버튼 연결 시 **추후 모델 연결**
-                setState(() {
-                  isResultImageVisible = true; // 버튼 누면 이미지 표시하게 임시로 연결
-                });
+                _classifyTrash(); // "쓰레기 분류하기" 버튼 클릭 시 딜레이 추가
               },
               style: ElevatedButton.styleFrom(
                 padding:
@@ -304,7 +317,9 @@ class _PostScreenState extends State<PostScreen> {
                 backgroundColor: const Color(0xffF5D184),
                 foregroundColor: const Color(0xff000000),
               ),
-              child: const Text('쓰레기 분류하기'),
+              child: isLoading // 로딩 중인 3초 동안 CircularProgressIndicator 표시
+                  ? const CircularProgressIndicator()
+                  : const Text('쓰레기 분류하기'),
             ),
             const SizedBox(
               height: 20.0,

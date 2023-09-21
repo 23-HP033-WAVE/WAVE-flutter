@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wave/screen/my_post_list_screen.dart';
 import 'package:wave/screen/post_analysis_screen.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 import 'package:wave/screen/badge_screen.dart';
 
 class MyPage extends StatefulWidget {

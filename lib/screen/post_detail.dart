@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 
-/* 신고 게시물 상세 목록 */
+/* 신고 게시물 상세 목록 -> 신고 게시물로 이름 바꿈 */
 
 class PostDetail extends StatefulWidget {
   const PostDetail({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(titleText: '신고한 내용'),
+      appBar: const MyAppBar(titleText: '신고 게시물'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,14 +62,10 @@ class _PostDetailState extends State<PostDetail> {
             Center(
               child: DataTable(
                 columns: const [
-                  DataColumn(label: Text('비고')),
-                  DataColumn(label: Text('내용')),
+                  DataColumn(label: Text('신고 제목')),
+                  DataColumn(label: Text('쓰레기를 치워주세요!!')),
                 ],
                 rows: const [
-                  DataRow(cells: [
-                    DataCell(Text('신고 제목')),
-                    DataCell(Text('쓰레기를 치워주세요!!')),
-                  ]),
                   DataRow(cells: [
                     DataCell(Text('신고 내용')),
                     DataCell(Text('강문해변에 알 수 없는 쓰레기 무덤')),

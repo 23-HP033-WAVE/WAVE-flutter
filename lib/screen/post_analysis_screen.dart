@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/resources/app_colors.dart';
-import 'package:wave/widgets/my_appbar.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 import 'package:wave/widgets/indicator.dart';
 // import 'package:fl_chart_app/presentation/widgets/indicator.dart';
 // import 'package:fl_chart_app/presentation/resources/app_resources.dart';
