@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wave/models/temp_webtoon_model.dart';
 import 'package:wave/screen/home_screen.dart';
+import 'package:wave/screen/my_posted_screen.dart';
 import 'package:wave/screen/post_detail.dart';
 import 'package:wave/screen/search_screen.dart';
 import 'package:wave/services/api_service.dart';
@@ -141,7 +142,7 @@ class MyPostList extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const PostDetail())),
+                  builder: (BuildContext context) => const MyPosted())),
               child: SizedBox(
                 width: 250,
                 child: Column(
@@ -157,7 +158,7 @@ class MyPostList extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const IsCheckedboxExample(),
+                        const CheckboxExample(),
                       ],
                     ),
                     Padding(

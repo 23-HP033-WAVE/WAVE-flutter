@@ -51,7 +51,7 @@ class _MyPostedState extends State<MyPosted> {
                       ),
                     ),
                     Text(
-                      '대한민국 : 강릉',
+                      '대한민국 : 강릉 - 미완료',
                     ),
                   ],
                 ),
@@ -61,16 +61,16 @@ class _MyPostedState extends State<MyPosted> {
             Center(
               child: DataTable(
                 columns: const [
-                  DataColumn(label: Text('게시물 제목')),
+                  DataColumn(label: Text('신고 제목')),
                   DataColumn(label: Text('해변에 있는 쓰레기를 치워주세요!!')),
                 ],
                 rows: const [
                   DataRow(cells: [
-                    DataCell(Text('게시물 내용')),
+                    DataCell(Text('신고 내용')),
                     DataCell(Text('강문해변에 알 수 없는 쓰레기 무덤')),
                   ]),
                   DataRow(cells: [
-                    DataCell(Text('위치 분류')),
+                    DataCell(Text('신고 장소')),
                     DataCell(Text('강문해변')),
                   ]),
                 ],
