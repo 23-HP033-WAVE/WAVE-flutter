@@ -6,8 +6,10 @@ import 'package:wave/screen/search_screen.dart';
 import 'package:wave/services/api_service.dart';
 import 'package:wave/widgets/my_appbar.dart';
 
-class PostList extends StatelessWidget {
-  PostList({Key? key}) : super(key: key);
+// 빠른 개발을 위해 post_list_screen 복붙 후 수정함 .. 코드 더러움 ㅠㅠ//
+
+class MyPostList extends StatelessWidget {
+  MyPostList({Key? key}) : super(key: key);
 
   // 임시
   Future<List<WebtoonModel>> webtoons = ApiService.getReports();
@@ -17,7 +19,7 @@ class PostList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(titleText: '신고 목록'),
+      appBar: const MyAppBar(titleText: '나의 신고 목록'),
       body: FutureBuilder(
         future: webtoons,
         builder: (context, snapshot) {
@@ -31,13 +33,13 @@ class PostList extends StatelessWidget {
                   const SizedBox(
                     height: 22,
                   ),
-                  const Text(
-                    '최근 게시물',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
+                  // const Text(
+                  //   '최근 게시물',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 20,
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 18,
                   ),
@@ -60,7 +62,7 @@ class PostList extends StatelessWidget {
     List<Map<String, dynamic>> reportlist = [
       {
         "post_id": 2,
-        "title": "해변에 있는 쓰레기를 치워주세요!!",
+        "title": "쓰레기를 치워주세요!!",
         "content": "강문해변에 알 수 없는 쓰레기 무덤",
         "date": "2023.09.16",
         "작성자": "김크림",
@@ -112,7 +114,7 @@ class PostList extends StatelessWidget {
 
     return ListView.separated(
       // itemCount: snapshot.data!.length, // 데이터 받아올때 코드
-      itemCount: 6, // 임시
+      itemCount: 1, // 임시
       itemBuilder: (context, index) {
         // futurebuilder와 비슷하지만 index로 요소에 접근함.
         // var webtoon = snapshot.data![index]; // 임시
@@ -128,7 +130,7 @@ class PostList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Image.asset(
-                'assets/images/thumb$counter.jpg',
+                'assets/images/detect_after.png',
                 width: 100.0,
                 height: 100.0,
                 fit: BoxFit.fill,

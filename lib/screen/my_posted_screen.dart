@@ -62,7 +62,7 @@ class _MyPostedState extends State<MyPosted> {
               child: DataTable(
                 columns: const [
                   DataColumn(label: Text('게시물 제목')),
-                  DataColumn(label: Text('쓰레기를 치워주세요!!')),
+                  DataColumn(label: Text('해변에 있는 쓰레기를 치워주세요!!')),
                 ],
                 rows: const [
                   DataRow(cells: [

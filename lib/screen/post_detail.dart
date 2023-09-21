@@ -14,7 +14,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(titleText: '신고 게시물 상세 목록'),
+      appBar: const MyAppBar(titleText: '신고한 내용'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

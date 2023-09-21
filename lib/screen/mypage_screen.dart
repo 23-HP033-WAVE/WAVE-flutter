@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wave/screen/my_post_list_screen.dart';
 import 'package:wave/screen/post_analysis_screen.dart';
 import 'package:wave/widgets/my_appbar.dart';
 import 'package:wave/screen/badge_screen.dart';
@@ -84,6 +85,11 @@ class _MyPageState extends State<MyPage> {
                   text: '나의 목록',
                   onPressed: () {
                     // 추가 필요
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyPostList()), // BadgePage로 이동
+                    );
                   },
                 ),
                 const SizedBox(width: 20),
