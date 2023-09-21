@@ -159,7 +159,7 @@ class PostList extends StatelessWidget {
                       children: [
                         Text(
                           reportlist[index]["title"],
-                          // 다 index로 수정하면 됩니당!
+                          // 다 index로 수정하면 됩니다!
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,
