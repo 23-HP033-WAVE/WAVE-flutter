@@ -39,6 +39,7 @@ dependencies:
   fl_chart: ^0.63.0
   image_picker: ^1.0.4
   uuid: ^4.0.0
+  remedi_kopo: ^0.0.2
 
 dev_dependencies:
   flutter_test:
