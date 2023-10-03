@@ -134,6 +134,7 @@ class _PostScreenState extends State<PostScreen> {
     );
   }
 
+  //addressController
   final TextEditingController _addressController = TextEditingController();
 
   @override
@@ -230,14 +231,12 @@ class _PostScreenState extends State<PostScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(right: 20, left: 20),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(padding: EdgeInsets.only(top: 10)),
-                    addressText(),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  addressText(),
+                ],
               ),
             ),
             /*Container(
