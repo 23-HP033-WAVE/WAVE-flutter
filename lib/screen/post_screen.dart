@@ -441,18 +441,6 @@ class _PostScreenState extends State<PostScreen> {
               width: 20,
               height: 50,
             ),
-            // SafeArea(
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 15, right: 15),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         const Padding(padding: EdgeInsets.only(top: 10)),
-            //         addressText(),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
