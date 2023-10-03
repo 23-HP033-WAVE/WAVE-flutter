@@ -8,7 +8,6 @@ import 'package:uuid/uuid.dart';
 import 'package:wave/widgets/appbar_without_back.dart';
 import 'package:wave/screen/my_posted_screen.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
-import 'package:flutter/services.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -239,16 +238,6 @@ class _PostScreenState extends State<PostScreen> {
                 ],
               ),
             ),
-            /*Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 13.0,
-              ),
-              child: const Divider(
-                color: Color(0xffA9A9A9),
-                height: 1.0,
-              ),
-            ),*/
             const SizedBox(height: 30.0),
             Container(
               margin: const EdgeInsets.only(right: 300),
@@ -473,7 +462,6 @@ class _PostScreenState extends State<PostScreen> {
   Widget addressText() {
     return GestureDetector(
       onTap: () {
-        HapticFeedback.mediumImpact();
         _addressAPI();
       },
       child: Column(
