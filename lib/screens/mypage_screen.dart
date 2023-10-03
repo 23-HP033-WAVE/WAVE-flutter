@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wave/screen/my_post_list_screen.dart';
-import 'package:wave/screen/post_analysis_screen.dart';
+import 'package:wave/screens/my_post_list_screen.dart';
+import 'package:wave/screens/post_analysis_screen.dart';
 import 'package:wave/widgets/appbar_with_back.dart';
-import 'package:wave/screen/badge_screen.dart';
+import 'package:wave/screens/badge_screen.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);

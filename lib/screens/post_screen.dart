@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:wave/models/post_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wave/widgets/appbar_without_back.dart';
-import 'package:wave/screen/my_posted_screen.dart';
+import 'package:wave/screens/my_posted_screen.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);

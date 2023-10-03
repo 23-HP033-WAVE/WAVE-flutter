@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wave/main.dart';
-import 'package:wave/screen/signup.dart';
+import 'package:wave/screens/signup.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/login_model.dart';
