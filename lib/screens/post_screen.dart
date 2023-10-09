@@ -7,6 +7,7 @@ import 'package:wave/models/post_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wave/widgets/appbar_without_back.dart';
 import 'package:wave/screens/my_posted_screen.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -132,6 +133,9 @@ class _PostScreenState extends State<PostScreen> {
     );
   }
 
+  //addressController
+  final TextEditingController _addressController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +181,7 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               child: TextField(
                 decoration: const InputDecoration(
                   hintText: '게시물 내용을 작성해주세요 :)',
@@ -192,47 +196,48 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ),
             const SizedBox(height: 70.0),
+            // Container(
+            //   margin: const EdgeInsets.only(right: 20, left: 20),
+            //   child: Row(
+            //     children: [
+            //       const Text(
+            //         '위치 분류 * (old)',
+            //         style: TextStyle(
+            //           color: Color(0xff545454),
+            //           fontSize: 16,
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.only(left: 50.0),
+            //         child: DropdownButton<String>(
+            //           value: dropdownValue,
+            //           onChanged: (String? newValue) {
+            //             setState(() {
+            //               dropdownValue = newValue!;
+            //             });
+            //           },
+            //           items: itemList
+            //               .map<DropdownMenuItem<String>>((String value) {
+            //             return DropdownMenuItem<String>(
+            //               value: value,
+            //               child: Text(value),
+            //             );
+            //           }).toList(),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Container(
-              margin: const EdgeInsets.only(right: 30, left: 20),
-              child: Row(
+              margin: const EdgeInsets.only(right: 20, left: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '위치 분류 *',
-                    style: TextStyle(
-                      color: Color(0xff545454),
-                      fontSize: 16,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50.0),
-                    child: DropdownButton<String>(
-                      value: dropdownValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue = newValue!;
-                        });
-                      },
-                      items: itemList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  addressText(),
                 ],
               ),
             ),
-            Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 13.0,
-                ),
-                child: const Divider(
-                  color: Color(0xffA9A9A9),
-                  height: 1.0,
-                )),
             const SizedBox(height: 30.0),
             Container(
               margin: const EdgeInsets.only(right: 300),
@@ -440,5 +445,53 @@ class _PostScreenState extends State<PostScreen> {
         ),
       ),
     );
+  }
+
+  Widget addressText() {
+    return GestureDetector(
+      onTap: () {
+        _addressAPI();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '위치 분류 *',
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xff545454),
+            ),
+          ),
+          TextFormField(
+            enabled: false,
+            decoration: const InputDecoration(
+              isDense: false,
+              hintText: '클릭해서 주소를 찾아주세요!',
+              hintStyle: TextStyle(
+                color: Color(0xffD9D9D9),
+              ),
+            ),
+            controller: _addressController,
+            style: const TextStyle(fontSize: 15),
+            maxLines: null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  _addressAPI() async {
+    KopoModel? model = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RemediKopo(),
+      ),
+    );
+
+    if (model != null) {
+      // 주소 선택을 하지 않고 뒤로가기를 할 경우 에러 나서 조건 추가
+      _addressController.text =
+          '${model.zonecode!} ${model.address!} ${model.buildingName!}';
+    }
   }
 }
