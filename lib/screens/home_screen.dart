@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wave/models/post_title_model.dart';
-import 'package:wave/screen/mypage_screen.dart';
+import 'package:wave/screens/mypage_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

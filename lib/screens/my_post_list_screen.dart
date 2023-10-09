@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:wave/models/temp_webtoon_model.dart';
-import 'package:wave/screen/home_screen.dart';
-import 'package:wave/screen/post_detail.dart';
-import 'package:wave/screen/search_screen.dart';
+import 'package:wave/screens/home_screen.dart';
+import 'package:wave/screens/my_posted_screen.dart';
+import 'package:wave/screens/post_detail.dart';
+import 'package:wave/screens/search_screen.dart';
 import 'package:wave/services/api_service.dart';
-import 'package:wave/widgets/appbar_without_back.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 
-class PostList extends StatelessWidget {
-  PostList({Key? key}) : super(key: key);
+// 빠른 개발을 위해 post_list_screen 복붙 후 수정함 .. 코드 더러움 ㅠㅠ//
+
+class MyPostList extends StatelessWidget {
+  MyPostList({Key? key}) : super(key: key);
 
   // 임시
   Future<List<WebtoonModel>> webtoons = ApiService.getReports();
@@ -17,7 +20,7 @@ class PostList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(titleText: '신고 목록'),
+      appBar: const MyAppBar(titleText: '나의 신고 목록'),
       body: FutureBuilder(
         future: webtoons,
         builder: (context, snapshot) {
@@ -31,13 +34,13 @@ class PostList extends StatelessWidget {
                   const SizedBox(
                     height: 22,
                   ),
-                  const Text(
-                    '최근 게시물',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
+                  // const Text(
+                  //   '최근 게시물',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 20,
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 18,
                   ),
@@ -55,12 +58,12 @@ class PostList extends StatelessWidget {
   }
 
   ListView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
-    // var counter = 0; // 이미지 접근을 위한 변수 (아래에서 선언)
+    var counter = 0; // 이미지 접근을 위한 변수
     // 신고 게시물 더미 데이터
     List<Map<String, dynamic>> reportlist = [
       {
         "post_id": 2,
-        "title": "해변에 있는 쓰레기를 치워주세요!!",
+        "title": "쓰레기를 치워주세요!!",
         "content": "강문해변에 알 수 없는 쓰레기 무덤",
         "date": "2023.09.16",
         "작성자": "김크림",
@@ -112,22 +115,12 @@ class PostList extends StatelessWidget {
 
     return ListView.separated(
       // itemCount: snapshot.data!.length, // 데이터 받아올때 코드
-      itemCount: 6, // 임시
+      itemCount: 1, // 임시
       itemBuilder: (context, index) {
         // futurebuilder와 비슷하지만 index로 요소에 접근함.
         // var webtoon = snapshot.data![index]; // 임시
-        var counter = index + 1;
-        // counter += 1;
 
-        /* ListView makeList 부분에서 var counter = 0; 정의한 후 
-        counter += 1; 했을 때 그냥 이 화면만 불러오는 건 문제가 안 되는데,
-        신고 등록 페이지에서 액션을 취하면 thumb8.jpg가 생성되고, 
-        thumb7까지만 로컬에 있으니까 디버깅 시 오류가 발생하는 듯요...
-        뭔가 post list도 임시로 데이터 넣었고 
-        post screen도 api 연결 안 되어있는 상태로 있다 보니 그 사이에서 뭔가 오류나는 게 아닌가..
-        그래서 그냥 여기서 임시로 counter = index + 1로 바꿨어요 
-        애초에 인덱스가 0~5까지 있으니 딱 thumb1 ~ thumb6 가져오도록.. */
-
+        counter += 1;
         return Row(
           children: [
             Container(
@@ -138,7 +131,7 @@ class PostList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Image.asset(
-                'assets/images/thumb$counter.jpg',
+                'assets/images/detect_after.png',
                 width: 100.0,
                 height: 100.0,
                 fit: BoxFit.fill,
@@ -149,7 +142,7 @@ class PostList extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const PostDetail())),
+                  builder: (BuildContext context) => const MyPosted())),
               child: SizedBox(
                 width: 250,
                 child: Column(
@@ -158,48 +151,49 @@ class PostList extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          reportlist[index]["title"],
-                          // 다 index로 수정하면 됩니다!
+                          reportlist[0]["title"],
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const IsCheckedboxExample(),
+                        const CheckboxExample(),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Text(
-                        reportlist[index]["content"],
+                        reportlist[0]["content"],
                         style: const TextStyle(
                           color: Color.fromARGB(255, 109, 109, 109),
                           fontSize: 12,
                           fontWeight: FontWeight.w200,
                         ),
                       ),
-                    ),
+                    ), // 임시
                     Text(
-                      '게시 일자: ${reportlist[index]["date"]}',
+                      '게시 일자: ${reportlist[0]["date"]}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
-                    ),
+                    ), // 임시
                     Text(
-                      '작성자: ${reportlist[index]["작성자"]}',
+                      '작성자: ${reportlist[0]["작성자"]}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
-                    ),
+                    ), // 임시
                   ],
                 ),
               ),
-            ),
+            ), // 임시
+
+            // Text(reportlist[index]["title"]) // 에러 이유 모르겠음
           ],
         );
       },

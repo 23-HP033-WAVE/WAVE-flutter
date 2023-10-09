@@ -12,6 +12,7 @@ class AppColors {
   static const Color borderColor = Colors.white54;
   static const Color gridLinesColor = Color(0x11FFFFFF);
 
+  // 임시 색상들
   static const Color contentColorBlack = Colors.black;
   static const Color contentColorWhite = Colors.white;
   static const Color contentColorBlue = Color(0xFF1C5AF9);
