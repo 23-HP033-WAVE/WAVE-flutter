@@ -30,7 +30,9 @@ class MyPostList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SearchField(),
+                  const SearchField(
+                    textenabled: true,
+                  ),
                   const SizedBox(
                     height: 22,
                   ),
@@ -200,42 +202,6 @@ class MyPostList extends StatelessWidget {
       separatorBuilder: (context, index) => const SizedBox(
         height: 14,
       ),
-    );
-  }
-}
-
-////// 리팩토링 이전 위젯
-class TempColumn extends StatelessWidget {
-  const TempColumn({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SearchField(),
-        SizedBox(
-          height: 18,
-        ),
-        Text(
-          '최근 게시물',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 22,
-          ),
-        ),
-        Column(
-          children: [
-            Row(
-              children: [
-                PostPreview(),
-              ],
-            )
-          ],
-        )
-      ],
     );
   }
 }

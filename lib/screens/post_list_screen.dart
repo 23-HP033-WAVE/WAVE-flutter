@@ -27,7 +27,7 @@ class PostList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SearchField(),
+                  const SearchField(textenabled: false),
                   const SizedBox(
                     height: 22,
                   ),
@@ -221,7 +221,9 @@ class TempColumn extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SearchField(),
+        SearchField(
+          textenabled: false,
+        ),
         SizedBox(
           height: 18,
         ),

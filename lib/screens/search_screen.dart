@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wave/widgets/appbar_with_back.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -6,14 +7,14 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: renderAppBar(context),
+      appBar: const MyAppBar(titleText: '신고 목록'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 10),
-            const SearchField(),
+            const SearchField(textenabled: true),
             const SizedBox(
               height: 10,
             ),
@@ -45,30 +46,6 @@ class SearchScreen extends StatelessWidget {
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  AppBar renderAppBar(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      backgroundColor: Colors.white,
-      elevation: 2,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black,
-        ),
-        onPressed: () {
-          // 뒤로 가기 기능 추가
-          Navigator.pop(context);
-        },
-      ),
-      title: const Text(
-        '신고 목록',
-        style: TextStyle(
-          color: Colors.black,
         ),
       ),
     );
@@ -120,29 +97,30 @@ class RecentSearchWidget extends StatelessWidget {
 }
 
 class SearchField extends StatelessWidget {
-  const SearchField({
-    super.key,
-  });
+  const SearchField({super.key, required this.textenabled});
+  final bool textenabled;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset(
-          'assets/images/logo.png',
-          width: 48, // 이미지의 너비 설정
-          height: 48, // 이미지의 높이 설정
-        ),
-        const SizedBox(width: 12), // 아이콘과 검색 필드 사이의 간격
-        Expanded(
-          child: SizedBox(
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => const SearchScreen())),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/images/logo.png',
+            width: 48,
             height: 48,
-            // error
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const SearchScreen())),
+          ),
+          const SizedBox(width: 12), // 아이콘과 검색 필드 사이의 간격
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              // error
               child: TextField(
+                enabled: textenabled,
+                autofocus: textenabled,
                 textAlignVertical: TextAlignVertical.center,
                 // 검색 필드
                 decoration: InputDecoration(
@@ -158,14 +136,14 @@ class SearchField extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            // 검색 버튼을 눌렀을 때의 동작 추가
-          },
-        ),
-      ],
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              // 검색 버튼을 눌렀을 때의 동작 추가
+            },
+          ),
+        ],
+      ),
     );
   }
 }
