@@ -27,7 +27,12 @@ class PostList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SearchField(textenabled: false),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const SearchScreen())),
+                    child: const SearchField(textenabled: false),
+                  ),
                   const SizedBox(
                     height: 22,
                   ),

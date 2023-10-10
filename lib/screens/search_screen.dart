@@ -102,48 +102,44 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => const SearchScreen())),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/logo.png',
-            width: 48,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(
+          'assets/images/logo.png',
+          width: 48,
+          height: 48,
+        ),
+        const SizedBox(width: 12), // 아이콘과 검색 필드 사이의 간격
+        Expanded(
+          child: SizedBox(
             height: 48,
-          ),
-          const SizedBox(width: 12), // 아이콘과 검색 필드 사이의 간격
-          Expanded(
-            child: SizedBox(
-              height: 48,
-              // error
-              child: TextField(
-                enabled: textenabled,
-                autofocus: textenabled,
-                textAlignVertical: TextAlignVertical.center,
-                // 검색 필드
-                decoration: InputDecoration(
-                  hintText: '쓰레기 종류나 지역을 검색해보세요!',
-                  hintStyle: TextStyle(
-                    color: Colors.grey.withOpacity(0.8),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: const BorderSide(color: Colors.grey),
-                  ),
+            // error
+            child: TextField(
+              enabled: textenabled,
+              autofocus: textenabled,
+              textAlignVertical: TextAlignVertical.center,
+              // 검색 필드
+              decoration: InputDecoration(
+                hintText: '쓰레기 종류나 지역을 검색해보세요!',
+                hintStyle: TextStyle(
+                  color: Colors.grey.withOpacity(0.8),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: const BorderSide(color: Colors.grey),
                 ),
               ),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // 검색 버튼을 눌렀을 때의 동작 추가
-            },
-          ),
-        ],
-      ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            // 검색 버튼을 눌렀을 때의 동작 추가
+          },
+        ),
+      ],
     );
   }
 }
