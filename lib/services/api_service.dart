@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wave/models/temp_webtoon_model.dart';
+import 'package:wave/models/post_model.dart';
 
 class ApiService {
   // url
@@ -41,5 +42,20 @@ class ApiService {
       // return reportpostInstances;
     }
     throw Error();
+  }
+
+  static const String apiUrl =
+      'https://jsonplaceholder.typicode.com/albums/1'; // 주소 변경 필요
+
+  // Upload Post
+  static Future<bool> uploadPost(PostModel postModel) async {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(postModel.toJson()),
+    );
+    return response.statusCode == 200;
   }
 }

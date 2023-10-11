@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:wave/services/api_service.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 import 'package:wave/models/post_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wave/widgets/appbar_without_back.dart';
@@ -17,23 +18,13 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  String dropdownValue = '선택 안 함'; // 드롭다운 메뉴 기본값
-  List<String> itemList = [
-    '선택 안 함',
-    '강릉',
-    '서울',
-    '인천',
-    '강문해변',
-    '동막해변',
-  ];
-
   TextEditingController subjectController = TextEditingController(); // 제목
   TextEditingController contentController = TextEditingController(); // 내용
   TextEditingController imageKeyController = TextEditingController(); // 이미지
-  TextEditingController addressController = TextEditingController(); // 주소
+  final TextEditingController addressController = TextEditingController(); // 주소
 
   // 임시 사용자 ID 생성
-  // 로그인을 안 만들었으니까.. 이걸로 UserID 대신 사용 (랜덤 값 기반인 v4가 제일 많이 사용된다 함)
+  // UserID 대신 사용 (랜덤 값 기반인 v4가 제일 많이 사용된다 함)
   String temporaryUserId = const Uuid().v4();
 
   // 갤러리에서 선택한 이미지 경로 저장용 list
@@ -63,23 +54,10 @@ class _PostScreenState extends State<PostScreen> {
     }
   }
 
+  // Http Post -> ApiService로 옮김
   Future<void> _uploadPost(PostModel postModel) async {
-    final url = Uri.parse(
-        'https://jsonplaceholder.typicode.com/albums/1'); // 백엔드 API 주소로 변경하기!! http://127.0.0.1:5000/posts/create
-
-    // 임시 사용자 ID -> postModel에 추가 위해서 copyWith사용
-    postModel = postModel.copyWith(userId: temporaryUserId);
-
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(postModel.toJson()),
-    );
-
-    if (response.statusCode == 200) {
-      // Post 성공 시
+    bool success = await ApiService.uploadPost(postModel);
+    if (success) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -93,7 +71,7 @@ class _PostScreenState extends State<PostScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('게시물이 성공적으로 등록되었습니다.'),
+          content: Text('게시물이 등록되지 않았습니다.'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -120,7 +98,7 @@ class _PostScreenState extends State<PostScreen> {
       subject: subjectController.text,
       content: contentController.text,
       imageKey: imageKeyController.text,
-      address: dropdownValue,
+      address: addressController.text,
       userId: temporaryUserId,
     );
     _uploadPost(postModel);
@@ -132,9 +110,6 @@ class _PostScreenState extends State<PostScreen> {
       ),
     );
   }
-
-  //addressController
-  final TextEditingController _addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -196,38 +171,6 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ),
             const SizedBox(height: 70.0),
-            // Container(
-            //   margin: const EdgeInsets.only(right: 20, left: 20),
-            //   child: Row(
-            //     children: [
-            //       const Text(
-            //         '위치 분류 * (old)',
-            //         style: TextStyle(
-            //           color: Color(0xff545454),
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.only(left: 50.0),
-            //         child: DropdownButton<String>(
-            //           value: dropdownValue,
-            //           onChanged: (String? newValue) {
-            //             setState(() {
-            //               dropdownValue = newValue!;
-            //             });
-            //           },
-            //           items: itemList
-            //               .map<DropdownMenuItem<String>>((String value) {
-            //             return DropdownMenuItem<String>(
-            //               value: value,
-            //               child: Text(value),
-            //             );
-            //           }).toList(),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Container(
               margin: const EdgeInsets.only(right: 20, left: 20),
               child: Column(
@@ -471,7 +414,7 @@ class _PostScreenState extends State<PostScreen> {
                 color: Color(0xffD9D9D9),
               ),
             ),
-            controller: _addressController,
+            controller: addressController,
             style: const TextStyle(fontSize: 15),
             maxLines: null,
           ),
@@ -490,7 +433,7 @@ class _PostScreenState extends State<PostScreen> {
 
     if (model != null) {
       // 주소 선택을 하지 않고 뒤로가기를 할 경우 에러 나서 조건 추가
-      _addressController.text =
+      addressController.text =
           '${model.zonecode!} ${model.address!} ${model.buildingName!}';
     }
   }
