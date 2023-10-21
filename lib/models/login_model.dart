@@ -1,22 +1,24 @@
+import 'dart:ffi';
+
 class LoginModel {
-  final String userId;
+  final String username;
   final String password;
 
   LoginModel({
-    required this.userId,
+    required this.username,
     required this.password,
   });
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) {
+  factory LoginModel.fromJson(Map<Int, dynamic> json) {
     return LoginModel(
-      userId: json['user_id'] as String,
+      username: json['username'] as String,
       password: json['password'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'user_id': userId.trim(),
+      'username': username.trim(),
       'password': password.trim(),
     };
   }
