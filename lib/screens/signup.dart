@@ -14,6 +14,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final pnumController = TextEditingController();
+  final locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,54 +24,70 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: const Color(0xFF72B8C1),
         title: const Text('회원 가입'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Sign Up',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              controller: usernameController,
-              decoration: const InputDecoration(
-                labelText: '이름',
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: '이메일',
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                labelText: '비밀번호',
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _signUp(context), // _signUp 함수 호출
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Sign Up',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                backgroundColor: const Color(0xFF72B8C1),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               ),
-              child: const Text('회원 가입'),
-            ),
-          ],
+              const SizedBox(height: 40),
+              TextField(
+                controller: usernameController,
+                decoration: const InputDecoration(
+                  labelText: '이름',
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  labelText: '이메일',
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: passwordController,
+                decoration: const InputDecoration(
+                  labelText: '비밀번호',
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: pnumController,
+                decoration: const InputDecoration(
+                  labelText: '전화번호',
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: locationController,
+                decoration: const InputDecoration(
+                  labelText: '주소',
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _signUp(context), // _signUp 함수 호출
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  backgroundColor: const Color(0xFF72B8C1),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                ),
+                child: const Text('회원 가입'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -79,14 +97,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final username = usernameController.text;
     final email = emailController.text;
     final password = passwordController.text;
+    final pnum = pnumController.text;
+    final location = locationController.text;
 
     // 서버쪽 URL
     final url = Uri.parse('https://어쩌구 저쩌구/signup');
 
-    final signUpModel =
-        SignUpModel(username: username, email: email, password: password);
+    final signUpModel = SignUpModel(
+      username: username,
+      email: email,
+      password: password,
+      pnum: pnum,
+      location: location,
+    );
 
-    // ScaffoldMessenger를 이용하여 SnackBar를 표시
     final scaffoldContext = ScaffoldMessenger.of(context);
     scaffoldContext.showSnackBar(
       const SnackBar(
