@@ -12,8 +12,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-// 나중에 함수 이름 변경할것! 지금은 cookbook보고 빨리 해보는중
-Future<Album> fetchAlbum() async {
+Future<Album> fetchReportPosts() async {
   final response = await http
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
@@ -24,22 +23,22 @@ Future<Album> fetchAlbum() async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to load album');
+    throw Exception('신고 게시물을 불러오지 못했습니다.');
   }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // 여기도 이름 변경하쇼
-  late Future<Album> futureAlbum;
+  late Future<Album> futureReportPosts;
 
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
+    futureReportPosts = fetchReportPosts();
   }
 
   @override
   Widget build(BuildContext context) {
+    const String name = '진영';
     return Scaffold(
       appBar: renderAppBar(context),
       body: Padding(
@@ -52,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                '안녕하세요! 예림님',
+                '안녕하세요! $name님',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 22,
@@ -64,15 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
               const Center(
                 child: CircleAvatar(
                   backgroundColor: Color(0xff1B818F),
-                  radius: 70,
+                  radius: 50,
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: 55,
+                    radius: 45,
                     child: CircleAvatar(
-                      radius: 50,
-                      // backgroundImage: AssetImage('assets/images/logo.png'),
-                      backgroundImage:
-                          NetworkImage('https://picsum.photos/id/237/200/300'),
+                      backgroundColor: Colors.blueGrey,
+                      radius: 43,
+                      backgroundImage: AssetImage('assets/images/myAvatar.png'),
+                      // NetworkImage('https://picsum.photos/id/237/200/300'),
                     ),
                   ),
                 ),
@@ -210,8 +209,8 @@ PreferredSize renderAppBar(BuildContext context) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(64),
     child: AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: const Color(0xff7091CF),
-      // title: const Text('Wave'),
       title: Padding(
         padding: const EdgeInsets.only(top: 18.0),
         child: Row(
