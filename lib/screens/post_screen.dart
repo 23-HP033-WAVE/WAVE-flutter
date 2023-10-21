@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:wave/services/api_service.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
 import 'package:wave/models/post_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wave/widgets/appbar_without_back.dart';

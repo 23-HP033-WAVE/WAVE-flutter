@@ -1,10 +1,10 @@
 // api 관련 처리하는 클래스
 
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:wave/models/temp_webtoon_model.dart';
 import 'package:wave/models/post_model.dart';
+import 'package:wave/models/login_model.dart';
 
 class ApiService {
   // url
@@ -57,5 +57,32 @@ class ApiService {
       body: jsonEncode(postModel.toJson()),
     );
     return response.statusCode == 200;
+  }
+
+  //로그인
+  static Future<bool> login(String userId, String password) async {
+    final url = Uri.parse('https://어쩌구 저쩌구/login');
+    final loginModel = LoginModel(userId: userId, password: password);
+
+    final response = await http.post(
+      url,
+      body: jsonEncode(loginModel.toJson()),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      final status = responseData['status'];
+      if (status == 'success') {
+        // 로그인 성공
+        return true;
+      } else {
+        // 로그인 실패
+        return false;
+      }
+    } else {
+      // 서버 오류
+      throw Exception('서버 오류: ${response.statusCode}');
+    }
   }
 }
