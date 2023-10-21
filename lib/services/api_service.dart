@@ -60,9 +60,9 @@ class ApiService {
   }
 
   //로그인
-  static Future<bool> login(String userId, String password) async {
+  static Future<bool> login(String username, String password) async {
     final url = Uri.parse('https://어쩌구 저쩌구/login');
-    final loginModel = LoginModel(userId: userId, password: password);
+    final loginModel = LoginModel(username: username, password: password);
 
     final response = await http.post(
       url,

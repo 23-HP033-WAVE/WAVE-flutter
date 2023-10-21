@@ -19,12 +19,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      final id = idController.text;
+      final username = idController.text;
       final password = passwordController.text;
 
       final url = Uri.parse('https://어쩌구 저쩌구/login');
 
-      final loginModel = LoginModel(userId: id, password: password);
+      final loginModel = LoginModel(username: username, password: password);
 
       //final scaffoldContext = Scaffold.of(context);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,11 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
         final responseData = jsonDecode(response.body);
         final status = responseData['status'];
         if (status == 'success') {
-          final userId = responseData['user_id'];
+          final username = responseData['username'];
           if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text('로그인 성공! 사용자 ID: $userId'),
+                content: Text('로그인 성공! 사용자 ID: $username'),
                 duration: const Duration(seconds: 2)),
           );
         } else {
