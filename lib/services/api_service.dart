@@ -7,10 +7,11 @@ import 'package:wave/models/post_model.dart';
 import 'package:wave/models/login_model.dart';
 
 class ApiService {
-  static const String reports = "http://3.39.112.66:5000";
+  static const String baseUrl = "http://3.39.112.66:5000";
+  static const String reports = "posts/list";
   static Future<List<ReportPostModel>> getReports() async {
     List<ReportPostModel> reportInstances = [];
-    final url = Uri.parse(reports);
+    final url = Uri.parse("$baseUrl/$reports");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
