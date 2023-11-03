@@ -41,14 +41,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   Icon(
                     Icons.edit_note,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
                     "수정",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.white),
                   )
                 ],
               ),
@@ -59,14 +59,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   Icon(
                     Icons.delete_outline,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
                     "삭제",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ],
               ),
