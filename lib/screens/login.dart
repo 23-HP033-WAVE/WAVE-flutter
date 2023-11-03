@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/login_model.dart';
 import 'package:wave/screens/signup.dart';
-import 'package:wave/main.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,16 +16,18 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController idController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final baseUrl = 'http://3.39.112.66:5000';
+  final login = '/auth/login/';
+
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       final username = idController.text;
       final password = passwordController.text;
 
-      final url = Uri.parse('https://어쩌구 저쩌구/login');
+      final url = Uri.parse('$baseUrl$login');
 
       final loginModel = LoginModel(username: username, password: password);
 
-      //final scaffoldContext = Scaffold.of(context);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('로그인 중...'),
@@ -134,7 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 20),
-                        // ID 입력 필드
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextFormField(
@@ -151,7 +151,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.emailAddress,
                           ),
                         ),
-                        // 비밀번호 입력 필드
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextFormField(
@@ -183,11 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor: const Color(0xff72B8C1),
                               ),
                               onPressed: () {
-                                //_login(context);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const TabPage()));
+                                _login(context);
                               },
                               child: const Text(
                                 'Login',

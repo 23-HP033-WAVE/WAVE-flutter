@@ -17,6 +17,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final pnumController = TextEditingController();
   final locationController = TextEditingController();
 
+  final baseUrl = 'http://3.39.112.66:5000';
+  final signup = '/auth/signup/';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => _signUp(context), // _signUp 함수 호출
+                onPressed: () => _signUp(context),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -100,8 +103,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final pnum = pnumController.text;
     final location = locationController.text;
 
-    // 서버쪽 URL
-    final url = Uri.parse('https://어쩌구 저쩌구/signup');
+    // 서버 URL 생성
+    final url = Uri.parse('$baseUrl$signup');
 
     final signUpModel = SignUpModel(
       username: username,
@@ -120,24 +123,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     final response = await http.post(
       url,
-      body: jsonEncode(signUpModel.toJson()), // JSON 형태로 전송
-      headers: {'Content-Type': 'application/json'}, // 헤더
+      body: jsonEncode(signUpModel.toJson()),
+      headers: {'Content-Type': 'application/json'},
     );
 
     if (response.statusCode == 200) {
-      // http OK 응답 시
       final responseData = jsonDecode(response.body);
       final status = responseData['status'];
-      // 회원가입 성공
       if (status == 'success') {
-        if (!mounted) return; // 비동기 시 async 뒤에 context에 null값 있을 수 있으므로
+        if (!mounted) return;
         scaffoldContext.showSnackBar(
           const SnackBar(
             content: Text('회원가입 성공!'),
             duration: Duration(seconds: 2),
           ),
         );
-        // 회원가입 성공 후 로그인 화면으로 이동
         Navigator.pop(context);
       } else {
         final message = responseData['message'];
