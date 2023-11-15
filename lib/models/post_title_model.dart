@@ -1,4 +1,4 @@
-// 임시로 만든 모델-이름 변경하기
+// 임시로 만든 모델 - 이름 변경 필요
 
 class Album {
   final int userId;

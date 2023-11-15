@@ -26,13 +26,12 @@ class ApiService {
     throw Error();
   }
 
-  static const String apiUrl =
-      'https://jsonplaceholder.typicode.com/albums/1'; // 주소 변경 필요
+  static const String posts = "posts/create/";
 
-  // Upload Post
+  // Post 기능
   static Future<bool> uploadPost(PostModel postModel) async {
     final response = await http.post(
-      Uri.parse(apiUrl),
+      Uri.parse("$baseUrl/$posts"),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -42,8 +41,9 @@ class ApiService {
   }
 
   //로그인
+  static const String log_in = '/auth/login/';
   static Future<bool> login(String username, String password) async {
-    final url = Uri.parse('https://어쩌구 저쩌구/login');
+    final url = Uri.parse("$baseUrl/$log_in");
     final loginModel = LoginModel(username: username, password: password);
 
     final response = await http.post(

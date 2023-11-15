@@ -6,7 +6,7 @@ import 'package:wave/screens/search_screen.dart';
 import 'package:wave/services/api_service.dart';
 import 'package:wave/widgets/appbar_with_back.dart';
 
-// 빠른 개발을 위해 post_list_screen 복붙 후 수정함 - 리팩토링 필수
+// post_list_screen 참고 리팩토링 필요
 
 class MyPostList extends StatelessWidget {
   MyPostList({Key? key}) : super(key: key);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import '../Models/auth.dart';
 // import 'successful_screen.dart';
 
-// 신진영이 중복으로 만든..ㅠ
+// 화면 중복
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

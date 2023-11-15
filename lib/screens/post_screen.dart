@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:wave/services/api_service.dart';
 import 'package:wave/models/post_model.dart';
-import 'package:uuid/uuid.dart';
 import 'package:wave/widgets/appbar_without_back.dart';
 import 'package:wave/screens/my_posted_screen.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
+import 'package:wave/services/api_service.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -21,20 +20,16 @@ class _PostScreenState extends State<PostScreen> {
   TextEditingController imageKeyController = TextEditingController(); // 이미지
   final TextEditingController addressController = TextEditingController(); // 주소
 
-  // 임시 사용자 ID 생성
-  // UserID 대신 사용 (랜덤 값 기반인 v4가 제일 많이 사용된다 함)
-  String temporaryUserId = const Uuid().v4();
-
-  // 갤러리에서 선택한 이미지 경로 저장용 list
-  List<String> selectedImages = [];
+  // 임시 사용자 ID
+  // String temporaryUserId = const Uuid().v4();
+  String myUserId = "123";
 
   // 이미지 선택 후 화면에 표시 위해서 생성
   Image? selectedImage;
 
-  // 임시 더미데이터 (모델 분류 결과) 보여주기 위해
-  // 이미지 변경 여부를 나타내는 변수
+  // 임시 모델 분류 결과 위해 이미지 변경 여부를 나타내는 변수
   bool isResultImageVisible = false;
-  // CircularProgressIndicator 사용 위해
+  // CircularProgressIndicator 사용
   bool isLoading = false;
 
   // 이미지 선택하기
@@ -52,7 +47,7 @@ class _PostScreenState extends State<PostScreen> {
     }
   }
 
-  // Http Post -> ApiService로 옮김
+  // Http Post -> ApiService
   Future<void> _uploadPost(PostModel postModel) async {
     bool success = await ApiService.uploadPost(postModel);
     if (success) {
@@ -90,21 +85,21 @@ class _PostScreenState extends State<PostScreen> {
     });
   }
 
-  // 등록하기 버튼을 눌렀을 때 화면 전환
+  // 등록하기 버튼 화면 전환
   void _registerScreen() {
     final postModel = PostModel(
       subject: subjectController.text,
       content: contentController.text,
       imageKey: imageKeyController.text,
       address: addressController.text,
-      userId: temporaryUserId,
+      user_id: myUserId,
     );
     _uploadPost(postModel);
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const MyPosted(), // 내가 신고한 내용으로 바로 연결
+        builder: (context) => const MyPosted(), // 내가 신고한 내용으로 연결
       ),
     );
   }
