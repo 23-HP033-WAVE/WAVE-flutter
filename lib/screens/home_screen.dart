@@ -17,12 +17,8 @@ Future<Album> fetchReportPosts() async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
     return Album.fromJson(jsonDecode(response.body));
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
     throw Exception('신고 게시물을 불러오지 못했습니다.');
   }
 }
@@ -183,7 +179,6 @@ Center checkLists() {
           horizontal: 10,
         ),
         child: Column(
-          // 알 수 없는 틈의 빈 공간 존재
           children: [
             Row(
               children: [

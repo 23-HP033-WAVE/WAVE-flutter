@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:wave/models/login_model.dart';
 import 'package:wave/screens/signup.dart';
+import 'package:wave/main.dart';
+import 'package:wave/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -23,9 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       final username = idController.text;
       final password = passwordController.text;
-
       final url = Uri.parse('$baseUrl$login');
-
       final loginModel = LoginModel(username: username, password: password);
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -40,36 +40,19 @@ class _LoginScreenState extends State<LoginScreen> {
         headers: {'Content-Type': 'application/json'},
       );
 
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final status = responseData['status'];
-        if (status == 'success') {
-          final username = responseData['username'];
-          if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text('로그인 성공! 사용자 ID: $username'),
-                duration: const Duration(seconds: 2)),
-          );
-        } else {
-          final message = responseData['message'];
-          if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('로그인 실패: $message'),
-              duration: const Duration(seconds: 2),
-            ),
-          );
-        }
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('서버 오류: ${response.statusCode}'),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      }
+      // 바로 홈 이동
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('로그인 성공! 사용자 ID: ${idController.text}'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+
+      //로그인 성공 시 홈으로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
     }
   }
 
@@ -182,7 +165,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor: const Color(0xff72B8C1),
                               ),
                               onPressed: () {
-                                _login(context);
+                                //_login(context);
+                                // 로그인 버튼 클릭 시
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const TabPage()),
+                                );
                               },
                               child: const Text(
                                 'Login',

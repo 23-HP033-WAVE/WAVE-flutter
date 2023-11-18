@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wave/widgets/appbar_popupmenu.dart';
 
-/* 신고 게시물 상세 목록 -> 신고 게시물로 이름 바꿈 */
+/* 신고 게시물 */
 
 class PostDetail extends StatefulWidget {
   const PostDetail({Key? key}) : super(key: key);
